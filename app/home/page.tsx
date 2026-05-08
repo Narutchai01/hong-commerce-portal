@@ -34,7 +34,7 @@ export default function HomePage() {
         </div>
         <div className="mb-8 flex flex-col items-end">
           <Link
-            href="/products"
+            href="/allProduct"
             className="text-md font-semibold text-primary underline hover:opacity-70"
           >
             View All

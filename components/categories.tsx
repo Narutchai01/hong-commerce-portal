@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   Laptop,
   Shirt,
@@ -12,46 +13,14 @@ import {
 } from "lucide-react";
 
 const categories = [
-  {
-    id: "tech",
-    name: "Tech",
-    icon: Laptop,
-  },
-  {
-    id: "fashion",
-    name: "Fashion",
-    icon: Shirt,
-  },
-  {
-    id: "home",
-    name: "Home",
-    icon: House,
-  },
-  {
-    id: "beauty",
-    name: "Beauty",
-    icon: HeartPulse,
-  },
-  {
-    id: "gaming",
-    name: "Gaming",
-    icon: Gamepad2,
-  },
-  {
-    id: "food",
-    name: "Food",
-    icon: Utensils,
-  },
-  {
-    id: "sports",
-    name: "Sports",
-    icon: Dumbbell,
-  },
-  {
-    id: "pets",
-    name: "Pets",
-    icon: PawPrint,
-  },
+  { id: "tech", name: "Tech", icon: Laptop },
+  { id: "fashion", name: "Fashion", icon: Shirt },
+  { id: "home", name: "Home", icon: House },
+  { id: "beauty", name: "Beauty", icon: HeartPulse },
+  { id: "gaming", name: "Gaming", icon: Gamepad2 },
+  { id: "food", name: "Food", icon: Utensils },
+  { id: "sports", name: "Sports", icon: Dumbbell },
+  { id: "pets", name: "Pets", icon: PawPrint },
 ];
 
 export default function Categories() {
@@ -62,8 +31,9 @@ export default function Categories() {
           const Icon = item.icon;
 
           return (
-            <button
-              key={item.name}
+            <Link
+              key={item.id}
+              href={`/allProduct?category=${item.id}`}
               className="group flex flex-col items-center gap-3 rounded-2xl bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
             >
               <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gray-100 transition group-hover:bg-primary/10">
@@ -73,7 +43,7 @@ export default function Categories() {
               <span className="text-sm font-medium">
                 {item.name}
               </span>
-            </button>
+            </Link>
           );
         })}
       </div>

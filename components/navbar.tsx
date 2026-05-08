@@ -8,7 +8,7 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/shadcn/ui/menubar";
-
+import Link from "next/link";
 import {
   Search,
   ShoppingCart,
@@ -23,7 +23,9 @@ export default function Navbar() {
       <div className="mx-auto flex h-16 items-center justify-between px-6">
         <div className="flex items-center gap-8">
           <h1 className="text-3xl font-bold text-primary">
-            Logo
+            <Link href="/home">
+              Logo
+            </Link>
           </h1>
 
           <div className="relative w-[450px]">
