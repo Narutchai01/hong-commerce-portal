@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+
 import {
   Laptop,
   Shirt,
@@ -24,6 +25,8 @@ const categories = [
 ];
 
 export default function Categories() {
+  const router = useRouter();
+
   return (
     <section className="px-4 pb-6 pt-5">
       <div className="grid grid-cols-4 gap-4 md:grid-cols-8">
@@ -31,9 +34,13 @@ export default function Categories() {
           const Icon = item.icon;
 
           return (
-            <Link
+            <button
               key={item.id}
-              href={`/allProduct?category=${item.id}`}
+              onClick={() =>
+                router.push(
+                  `/allProduct?category=${item.id}`
+                )
+              }
               className="group flex flex-col items-center gap-3 rounded-2xl bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
             >
               <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gray-100 transition group-hover:bg-primary/10">
@@ -43,7 +50,7 @@ export default function Categories() {
               <span className="text-sm font-medium">
                 {item.name}
               </span>
-            </Link>
+            </button>
           );
         })}
       </div>

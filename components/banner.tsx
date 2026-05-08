@@ -1,8 +1,11 @@
 "use client";
 
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function HomeBanner() {
+  const router = useRouter();
+
   return (
     <section className="relative overflow-hidden rounded-md px-4 pt-4">
       <div className="relative overflow-hidden rounded-2xl">
@@ -26,7 +29,10 @@ export default function HomeBanner() {
               New Collections
             </h1>
 
-            <button className="mt-6 rounded-lg bg-primary px-6 py-3 font-semibold text-white transition hover:opacity-90">
+            <button
+              onClick={() => router.push("/allProduct")}
+              className="mt-6 rounded-lg bg-primary px-6 py-3 font-semibold text-white transition hover:opacity-90"
+            >
               Shop Now
             </button>
           </div>

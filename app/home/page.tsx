@@ -1,15 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 import Navbar from "@/components/navbar";
 import HomeBanner from "@/components/banner";
 import Categories from "@/components/categories";
 import ProductCard from "@/components/productCard";
 import Footer from "@/components/footer";
+
 import { products } from "@/data/mockData";
-import Link from "next/link";
 
 export default function HomePage() {
+  const router = useRouter();
+
   const [visibleCount, setVisibleCount] = useState(4);
 
   const loadMore = () => {
@@ -21,36 +25,36 @@ export default function HomePage() {
   return (
     <main className="min-h-screen">
       <Navbar />
-
       <HomeBanner />
-
       <Categories />
 
       <section className="px-4 pb-10">
+
         <div className="mb-8 flex flex-col items-center">
-          <h2 className="text-2xl font-bold text-primary">
-            Popular Products
-          </h2>
+          <h2 className="text-2xl font-bold text-primary"> Popular Products </h2>
         </div>
         <div className="mb-8 flex flex-col items-end">
-          <Link
-            href="/allProduct"
-            className="text-md font-semibold text-primary underline hover:opacity-70"
-          >
-            View All
-          </Link>
-        </div>
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-          {products.slice(0, visibleCount).map((product) => (
-            <ProductCard
-              key={product.id}
-              image={product.image}
-              title={product.title}
-              price={product.price}
-            />
-          ))}
+          <button onClick={() => router.push("/allProduct")}
+            className="text-md font-semibold text-primary underline transition hover:opacity-70" >
+            View All </button>
         </div>
 
+        {/* Products */}
+        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+          {products
+            .slice(0, visibleCount)
+            .map((product) => (
+              <ProductCard
+                key={product.id}
+                id={product.id}
+                image={product.image}
+                title={product.title}
+                price={product.price}
+              />
+            ))}
+        </div>
+
+        {/* Load More */}
         {visibleCount < products.length && (
           <div className="mt-10 flex justify-center">
             <button
@@ -65,6 +69,7 @@ export default function HomePage() {
           </div>
         )}
       </section>
+
       <Footer />
     </main>
   );

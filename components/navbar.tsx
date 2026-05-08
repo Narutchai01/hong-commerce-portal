@@ -1,6 +1,9 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+
 import { Input } from "@/shadcn/ui/input";
+
 import {
   Menubar,
   MenubarContent,
@@ -8,7 +11,7 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/shadcn/ui/menubar";
-import Link from "next/link";
+
 import {
   Search,
   ShoppingCart,
@@ -18,14 +21,17 @@ import {
 } from "lucide-react";
 
 export default function Navbar() {
+  const router = useRouter();
+
   return (
     <nav className="w-full border-b bg-white shadow-sm">
       <div className="mx-auto flex h-16 items-center justify-between px-6">
         <div className="flex items-center gap-8">
-          <h1 className="text-3xl font-bold text-primary">
-            <Link href="/home">
-              Logo
-            </Link>
+          <h1
+            onClick={() => router.push("/home")}
+            className="cursor-pointer text-3xl font-bold text-primary"
+          >
+            Logo
           </h1>
 
           <div className="relative w-[450px]">
@@ -42,22 +48,30 @@ export default function Navbar() {
           <button className="transition hover:text-[#EE4D2D]">
             <ShoppingCart className="h-6 w-6" />
           </button>
-
           <button className="transition hover:text-[#EE4D2D]">
             <Bell className="h-6 w-6" />
           </button>
-
           <Menubar className="border-0 shadow-none">
             <MenubarMenu>
               <MenubarTrigger className="flex cursor-pointer items-center gap-1 px-0 hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent">
                 <User className="h-6 w-6" />
+
                 <ChevronDown className="h-4 w-4" />
               </MenubarTrigger>
 
-              <MenubarContent align="end">
-                <MenubarItem>Profile</MenubarItem>
-                <MenubarItem>Orders</MenubarItem>
-                <MenubarItem>Settings</MenubarItem>
+              <MenubarContent align="end" className="text-md">
+                <MenubarItem >
+                  Profile
+                </MenubarItem>
+
+                <MenubarItem>
+                  Orders
+                </MenubarItem>
+
+                <MenubarItem>
+                  Settings
+                </MenubarItem>
+
                 <MenubarItem className="text-red-500">
                   Logout
                 </MenubarItem>

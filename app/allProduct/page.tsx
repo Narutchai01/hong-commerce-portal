@@ -59,7 +59,7 @@ export default function ProductsPage() {
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`border px-4 py-1 text-sm transition
+              className={`border px-4 py-1 text-lg transition
                 ${
                   selectedCategory === cat
                     ? "border-primary bg-primary text-white"
@@ -76,8 +76,7 @@ export default function ProductsPage() {
               key={product.id}
               image={product.image}
               title={product.title}
-              price={product.price}
-            />
+              price={product.price} id={0}            />
           ))}
         </div>
         <div className="mt-8 flex justify-center gap-2">
