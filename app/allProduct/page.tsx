@@ -60,10 +60,9 @@ export default function ProductsPage() {
               key={cat}
               onClick={() => setSelectedCategory(cat)}
               className={`border px-4 py-1 text-lg transition
-                ${
-                  selectedCategory === cat
-                    ? "border-primary bg-primary text-white"
-                    : "border-gray-300 bg-white text-primary hover:border-primary"
+                ${selectedCategory === cat
+                  ? "border-primary bg-primary text-white"
+                  : "border-gray-300 bg-white text-primary hover:border-primary"
                 }`}
             >
               {cat}
@@ -76,7 +75,9 @@ export default function ProductsPage() {
               key={product.id}
               image={product.image}
               title={product.title}
-              price={product.price} id={0}            />
+              price={product.price}
+              id={product.id}
+            />
           ))}
         </div>
         <div className="mt-8 flex justify-center gap-2">
@@ -91,11 +92,10 @@ export default function ProductsPage() {
             <button
               key={i}
               onClick={() => setCurrentPage(i + 1)}
-              className={`rounded px-3 py-1 border ${
-                currentPage === i + 1
+              className={`rounded px-3 py-1 border ${currentPage === i + 1
                   ? "bg-primary text-white border-primary"
                   : ""
-              }`}
+                }`}
             >
               {i + 1}
             </button>
