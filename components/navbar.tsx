@@ -22,8 +22,7 @@ import {
   User,
   ChevronDown,
 } from "lucide-react";
-
-import { User as UserType } from "@/data/mockUser";
+import { User as UserType, mockCart } from "@/data/mockUser";
 
 export default function Navbar() {
   const router = useRouter();
@@ -80,6 +79,38 @@ export default function Navbar() {
 
     router.push("/");
   };
+  const [cartCount, setCartCount] = useState(0);
+  useEffect(() => {
+    const updateCart = () => {
+      const storedCart = localStorage.getItem("cart");
+
+      if (storedCart) {
+        const parsedCart = JSON.parse(storedCart);
+
+        const total = parsedCart.reduce(
+          (sum: number, item: any) =>
+            sum + item.quantity,
+          0
+        );
+
+        setCartCount(total);
+      }
+    };
+
+    updateCart();
+
+    window.addEventListener(
+      "cartUpdated",
+      updateCart
+    );
+
+    return () => {
+      window.removeEventListener(
+        "cartUpdated",
+        updateCart
+      );
+    };
+  }, []);
 
   return (
     <nav className="w-full border-b bg-white shadow-sm">
@@ -131,19 +162,17 @@ export default function Navbar() {
             </div>
           ) : (
             <>
-              <button className="relative transition hover:text-[#EE4D2D]">
+              <button
+                className="relative transition hover:text-[#EE4D2D]"
+                onClick={() => router.push("/order")}
+              >
                 <ShoppingCart className="h-6 w-6" />
 
-                {user &&
-                  user.stats.wishlist >
-                    0 && (
-                    <span className="absolute -top-2 -right-2 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-red-500 px-1 text-xs text-white">
-                      {
-                        user.stats
-                          .wishlist
-                      }
-                    </span>
-                  )}
+                {cartCount > 0 && (
+                  <span className="absolute -top-2 -right-2 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-red-500 px-1 text-xs text-white">
+                    {cartCount}
+                  </span>
+                )}
               </button>
 
               <button className="relative transition hover:text-[#EE4D2D]">
@@ -152,7 +181,7 @@ export default function Navbar() {
                 {user &&
                   user.stats
                     .notifications >
-                    0 && (
+                  0 && (
                     <span className="absolute -top-2 -right-2 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-red-500 px-1 text-xs text-white">
                       {
                         user.stats

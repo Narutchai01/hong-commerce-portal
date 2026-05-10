@@ -11,6 +11,40 @@ export default function ProductInfo({
   qty,
   setQty,
 }: Props) {
+  const handleAddToCart = () => {
+  const storedCart = localStorage.getItem("cart");
+
+  let cart = storedCart
+    ? JSON.parse(storedCart)
+    : [];
+
+  const existingItem = cart.find(
+    (item: any) => item.id === product.id
+  );
+
+  if (existingItem) {
+    existingItem.quantity += qty;
+  } else {
+    cart.push({
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      quantity: qty,
+      category: product.category,
+      image: product.image,
+      brand: product.brand,
+    });
+  }
+
+  localStorage.setItem(
+    "cart",
+    JSON.stringify(cart)
+  );
+
+  window.dispatchEvent(
+    new Event("cartUpdated")
+  );
+};
   return (
     <div>
       <span className="rounded-full bg-orange-500 px-3 py-1 text-xs text-white">
@@ -60,7 +94,10 @@ export default function ProductInfo({
       <QuantitySelector qty={qty} setQty={setQty} />
 
       <div className="mt-8 flex gap-4">
-        <button className="flex-1 rounded-xl border-2 border-orange-500 py-4 font-semibold text-orange-500">
+        <button
+          onClick={handleAddToCart}
+          className="flex-1 rounded-xl border-2 border-orange-500 py-4 font-semibold text-orange-500"
+        >
           Add to Cart
         </button>
 
