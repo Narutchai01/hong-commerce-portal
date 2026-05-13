@@ -23,6 +23,7 @@ export interface User {
     address: UserAddress;
     stats: UserStats;
     createdAt: string;
+    gender: string;
 }
 
 export type OrderStatus =
@@ -143,6 +144,7 @@ export const mockUser: User = {
     id: 1,
     username: "johndoe",
     fullName: "John Doe",
+    gender: "Male",
     email: "johndoe@gmail.com",
     phone: "0895526352",
     password: "11223344",

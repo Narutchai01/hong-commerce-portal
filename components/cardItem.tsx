@@ -45,6 +45,7 @@ export default function CartItems({
     increaseQty,
     decreaseQty,
 }: Props) {
+    
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between rounded-md border bg-white px-5 py-4">

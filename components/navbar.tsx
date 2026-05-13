@@ -22,7 +22,7 @@ import {
   User,
   ChevronDown,
 } from "lucide-react";
-import { User as UserType, mockCart } from "@/data/mockUser";
+import { User as UserType, mockCart, mockUser } from "@/data/mockUser";
 
 export default function Navbar() {
   const router = useRouter();
@@ -164,7 +164,7 @@ export default function Navbar() {
             <>
               <button
                 className="relative transition hover:text-[#EE4D2D]"
-                onClick={() => router.push("/order")}
+                onClick={() => router.push(`/${mockUser.id}/order`)}
               >
                 <ShoppingCart className="h-6 w-6" />
 
@@ -204,16 +204,24 @@ export default function Navbar() {
                       {user?.fullName}
                     </MenubarItem>
 
-                    <MenubarItem>
-                      Orders (
-                      {
-                        user?.stats
-                          .orders
+                    <MenubarItem
+                      onClick={() =>
+                        router.push(
+                          `/${mockUser.id}/myOrder`
+                        )
                       }
-                      )
+                      className="cursor-pointer"
+                    >
+                      My Orders
                     </MenubarItem>
 
-                    <MenubarItem>
+                    <MenubarItem onClick={() =>
+                        router.push(
+                          `/${mockUser.id}/profile`
+                        )
+                      }
+                      className="cursor-pointer"
+                    >
                       Settings
                     </MenubarItem>
 

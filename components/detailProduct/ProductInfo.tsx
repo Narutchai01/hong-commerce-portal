@@ -1,50 +1,113 @@
-import QuantitySelector from "./QuantitySelector";
+"use client";
 
-type Props = {
-  product: any;
+import { mockUser } from "@/data/mockUser";
+import { useRouter } from "next/navigation";
+
+function QuantitySelector({
+  qty,
+  setQty,
+}: {
   qty: number;
   setQty: React.Dispatch<React.SetStateAction<number>>;
-};
+}) {
+  return (
+    <div className="flex items-center gap-3 mt-4">
+      <button
+        onClick={() => setQty(Math.max(1, qty - 1))}
+        className="px-3 py-1 border rounded"
+      >
+        -
+      </button>
 
+      <span className="font-semibold">{qty}</span>
+
+      <button
+        onClick={() => setQty(qty + 1)}
+        className="px-3 py-1 border rounded"
+      >
+        +
+      </button>
+    </div>
+  );
+}
 export default function ProductInfo({
   product,
   qty,
   setQty,
-}: Props) {
+}: any) {
+  const router = useRouter();
+
   const handleAddToCart = () => {
-  const storedCart = localStorage.getItem("cart");
+  const user = localStorage.getItem("user");
 
-  let cart = storedCart
-    ? JSON.parse(storedCart)
-    : [];
+  if (!user) {
+    router.push("/login");
+    return;
+  }
 
-  const existingItem = cart.find(
-    (item: any) => item.id === product.id
+  const stored = localStorage.getItem("cart");
+
+  let cart = stored ? JSON.parse(stored) : [];
+
+  const existing = cart.find(
+    (i: any) => i.id === product.id
   );
 
-  if (existingItem) {
-    existingItem.quantity += qty;
+  if (existing) {
+    existing.quantity += qty;
   } else {
     cart.push({
-      id: product.id,
+      id: Number(product.id),
       title: product.title,
       price: product.price,
       quantity: qty,
-      category: product.category,
       image: product.image,
       brand: product.brand,
     });
   }
 
-  localStorage.setItem(
-    "cart",
-    JSON.stringify(cart)
-  );
+  localStorage.setItem("cart", JSON.stringify(cart));
 
-  window.dispatchEvent(
-    new Event("cartUpdated")
-  );
+  window.dispatchEvent(new Event("cartUpdated"));
 };
+  const handleBuyNow = () => {
+    const user = localStorage.getItem("user");
+
+    if (!user) {
+      router.push("/login");
+      return;
+    }
+
+    const item = {
+      id: Number(product.id),
+      title: product.title,
+      price: product.price,
+      quantity: qty,
+      image: product.image,
+      brand: product.brand,
+    };
+
+    const order = {
+      orderId: `BF-${Date.now()}`,
+      items: [item],
+      total: product.price * qty,
+      status: "toPay",
+      createdAt: Date.now(),
+      source: "buyNow",
+    };
+
+    localStorage.setItem(
+      "currentOrder",
+      JSON.stringify(order)
+    );
+
+    localStorage.setItem(
+      "selectedCartItems",
+      JSON.stringify([Number(product.id)])
+    );
+
+    router.push(`/${mockUser.id}/checkout`);
+  };
   return (
     <div>
       <span className="rounded-full bg-orange-500 px-3 py-1 text-xs text-white">
@@ -90,8 +153,16 @@ export default function ProductInfo({
           🎨 Colors: {product.colors.join(", ")}
         </p>
       </div>
+      <div className="mt-6">
+        <h3 className="font-semibold text-neutral-900">
+          Quantity
+        </h3>
 
-      <QuantitySelector qty={qty} setQty={setQty} />
+        <QuantitySelector
+          qty={qty}
+          setQty={setQty}
+        />
+      </div>
 
       <div className="mt-8 flex gap-4">
         <button
@@ -101,7 +172,10 @@ export default function ProductInfo({
           Add to Cart
         </button>
 
-        <button className="flex-1 rounded-xl bg-orange-500 py-4 font-semibold text-white">
+        <button
+          onClick={handleBuyNow}
+          className="flex-1 rounded-xl bg-orange-500 py-4 font-semibold text-white"
+        >
           Buy Now
         </button>
       </div>
