@@ -32,9 +32,7 @@ export default function ProductGallery({
             key={index}
             onClick={() => setSelectedImage(img)}
             className={`relative h-40 w-40 overflow-hidden rounded-lg border-2 ${
-              selectedImage === img
-                ? "border-orange-500"
-                : "border-transparent"
+              selectedImage === img ? "border-orange-500" : "border-transparent"
             }`}
           >
             <Image

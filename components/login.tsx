@@ -2,27 +2,20 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import {
-  Eye,
-  EyeOff,
-} from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 
 import { mockUser } from "@/data/mockUser";
 
 export default function LoginForm() {
   const router = useRouter();
 
-  const [showPassword, setShowPassword] =
-    useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  const [email, setEmail] =
-    useState("");
+  const [email, setEmail] = useState("");
 
-  const [password, setPassword] =
-    useState("");
+  const [password, setPassword] = useState("");
 
-  const [error, setError] =
-    useState("");
+  const [error, setError] = useState("");
 
   const handleLogin = (
     e: React.FormEvent
@@ -61,10 +54,7 @@ export default function LoginForm() {
         Welcome back to the digital
       </p>
 
-      <form
-        onSubmit={handleLogin}
-        className="space-y-5"
-      >
+      <form onSubmit={handleLogin} className="space-y-5">
         <div>
           <label className="mb-2 block text-sm font-semibold">
             Phone Number or Email
@@ -73,43 +63,27 @@ export default function LoginForm() {
           <input
             type="text"
             value={email}
-            onChange={(e) =>
-              setEmail(e.target.value)
-            }
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email"
             className="h-[50px] w-full rounded-md border px-4 outline-none focus:border-[#d12b00]"
           />
         </div>
 
         <div>
-          <label className="mb-2 block text-sm font-semibold">
-            Password
-          </label>
+          <label className="mb-2 block text-sm font-semibold">Password</label>
 
           <div className="relative">
             <input
-              type={
-                showPassword
-                  ? "text"
-                  : "password"
-              }
+              type={showPassword ? "text" : "password"}
               value={password}
-              onChange={(e) =>
-                setPassword(
-                  e.target.value
-                )
-              }
+              onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter password"
               className="h-[50px] w-full rounded-md border px-4 pr-12 outline-none focus:border-[#d12b00]"
             />
 
             <button
               type="button"
-              onClick={() =>
-                setShowPassword(
-                  !showPassword
-                )
-              }
+              onClick={() => setShowPassword(!showPassword)}
               className="absolute top-1/2 right-4 -translate-y-1/2 text-gray-500"
             >
               {showPassword ? (
@@ -121,11 +95,7 @@ export default function LoginForm() {
           </div>
         </div>
 
-        {error && (
-          <p className="text-sm text-red-500">
-            {error}
-          </p>
-        )}
+        {error && <p className="text-sm text-red-500">{error}</p>}
 
         <button
           type="submit"
@@ -139,9 +109,7 @@ export default function LoginForm() {
         Don&apos;t have an account?{" "}
         <button
           type="button"
-          onClick={() =>
-            router.push("/signup")
-          }
+          onClick={() => router.push("/signup")}
           className="font-semibold text-[#d12b00]"
         >
           Sign Up

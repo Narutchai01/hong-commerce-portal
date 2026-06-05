@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  useRouter,
-  usePathname,
-} from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 import { useEffect, useState } from "react";
 import { Input } from "@/shadcn/ui/input";
@@ -15,13 +12,7 @@ import {
   MenubarTrigger,
 } from "@/shadcn/ui/menubar";
 
-import {
-  Search,
-  ShoppingCart,
-  Bell,
-  User,
-  ChevronDown,
-} from "lucide-react";
+import { Search, ShoppingCart, Bell, User, ChevronDown } from "lucide-react";
 import { User as UserType, mockCart, mockUser } from "@/data/mockUser";
 
 export default function Navbar() {
@@ -29,19 +20,15 @@ export default function Navbar() {
 
   const pathname = usePathname();
 
-  const [isLogin, setIsLogin] =
-    useState(false);
+  const [isLogin, setIsLogin] = useState(false);
 
-  const [user, setUser] =
-    useState<UserType | null>(null);
+  const [user, setUser] = useState<UserType | null>(null);
 
   useEffect(() => {
     const checkLogin = () => {
-      const token =
-        localStorage.getItem("token");
+      const token = localStorage.getItem("token");
 
-      const storedUser =
-        localStorage.getItem("user");
+      const storedUser = localStorage.getItem("user");
 
       setIsLogin(!!token);
 
@@ -52,21 +39,13 @@ export default function Navbar() {
 
     checkLogin();
 
-    window.addEventListener(
-      "storage",
-      checkLogin
-    );
+    window.addEventListener("storage", checkLogin);
 
     return () => {
-      window.removeEventListener(
-        "storage",
-        checkLogin
-      );
+      window.removeEventListener("storage", checkLogin);
     };
   }, []);
-  const isAuthPage =
-    pathname === "/login" ||
-    pathname === "/signup";
+  const isAuthPage = pathname === "/login" || pathname === "/signup";
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -88,9 +67,8 @@ export default function Navbar() {
         const parsedCart = JSON.parse(storedCart);
 
         const total = parsedCart.reduce(
-          (sum: number, item: any) =>
-            sum + item.quantity,
-          0
+          (sum: number, item: any) => sum + item.quantity,
+          0,
         );
 
         setCartCount(total);
@@ -99,16 +77,10 @@ export default function Navbar() {
 
     updateCart();
 
-    window.addEventListener(
-      "cartUpdated",
-      updateCart
-    );
+    window.addEventListener("cartUpdated", updateCart);
 
     return () => {
-      window.removeEventListener(
-        "cartUpdated",
-        updateCart
-      );
+      window.removeEventListener("cartUpdated", updateCart);
     };
   }, []);
 
@@ -117,9 +89,7 @@ export default function Navbar() {
       <div className="mx-auto flex h-16 items-center justify-between px-6">
         <div className="flex items-center gap-8">
           <h1
-            onClick={() =>
-              router.push("/")
-            }
+            onClick={() => router.push("/")}
             className="cursor-pointer text-3xl font-bold text-primary"
           >
             Logo
@@ -141,9 +111,7 @@ export default function Navbar() {
           {!isLogin ? (
             <div className="flex items-center gap-3">
               <button
-                onClick={() =>
-                  router.push("/login")
-                }
+                onClick={() => router.push("/login")}
                 className="font-medium transition hover:text-[#EE4D2D]"
               >
                 Login
@@ -152,9 +120,7 @@ export default function Navbar() {
               <div className="h-5 w-[1px] bg-gray-300" />
 
               <button
-                onClick={() =>
-                  router.push("/signup")
-                }
+                onClick={() => router.push("/signup")}
                 className="font-medium transition hover:text-[#EE4D2D]"
               >
                 Sign Up
@@ -178,17 +144,11 @@ export default function Navbar() {
               <button className="relative transition hover:text-[#EE4D2D]">
                 <Bell className="h-6 w-6" />
 
-                {user &&
-                  user.stats
-                    .notifications >
-                  0 && (
-                    <span className="absolute -top-2 -right-2 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-red-500 px-1 text-xs text-white">
-                      {
-                        user.stats
-                          .notifications
-                      }
-                    </span>
-                  )}
+                {user?.stats && user.stats.notifications > 0 && (
+                  <span className="absolute -top-2 -right-2 flex h-5 min-w-[20px] items-center justify-center rounded-full bg-red-500 px-1 text-xs text-white">
+                    {user.stats.notifications}
+                  </span>
+                )}
               </button>
 
               <Menubar className="border-0 shadow-none">
@@ -200,35 +160,24 @@ export default function Navbar() {
                   </MenubarTrigger>
 
                   <MenubarContent align="end">
-                    <MenubarItem>
-                      {user?.fullName}
-                    </MenubarItem>
+                    <MenubarItem>{user?.fullName}</MenubarItem>
 
                     <MenubarItem
-                      onClick={() =>
-                        router.push(
-                          `/${mockUser.id}/myOrder`
-                        )
-                      }
+                      onClick={() => router.push(`/${mockUser.id}/myOrder`)}
                       className="cursor-pointer"
                     >
                       My Orders
                     </MenubarItem>
 
-                    <MenubarItem onClick={() =>
-                        router.push(
-                          `/${mockUser.id}/profile`
-                        )
-                      }
+                    <MenubarItem
+                      onClick={() => router.push(`/${mockUser.id}/profile`)}
                       className="cursor-pointer"
                     >
                       Settings
                     </MenubarItem>
 
                     <MenubarItem
-                      onClick={
-                        handleLogout
-                      }
+                      onClick={handleLogout}
                       className="text-red-500"
                     >
                       Logout
