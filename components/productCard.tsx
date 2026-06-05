@@ -19,7 +19,6 @@ export default function ProductCard({
   return (
     <Link href={`/detailProduct/${id}`}>
       <div className="group overflow-hidden rounded-xl bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-md">
-        
         <div className="relative overflow-hidden">
           <Image
             src={image}
@@ -35,17 +34,12 @@ export default function ProductCard({
             {title}
           </h3>
 
-          <p className="text-xs font-semibold text-primary">
-            Free Shipping
-          </p>
+          <p className="text-xs font-semibold text-primary">Free Shipping</p>
 
           <div className="flex items-end justify-between">
-            <span className="text-2xl font-bold text-primary">
-              ${price}
-            </span>
+            <span className="text-2xl font-bold text-primary">${price}</span>
           </div>
         </div>
-
       </div>
     </Link>
   );

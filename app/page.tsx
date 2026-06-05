@@ -48,16 +48,12 @@ export default function HomePage() {
 
       <section className="px-4 pb-10">
         <div className="mb-8 flex flex-col items-center">
-          <h2 className="text-2xl font-bold text-primary">
-            Popular Products
-          </h2>
+          <h2 className="text-2xl font-bold text-primary">Popular Products</h2>
         </div>
 
         <div className="mb-8 flex flex-col items-end">
           <button
-            onClick={() =>
-              router.push("/allProduct")
-            }
+            onClick={() => router.push("/allProduct")}
             className="text-md font-semibold text-primary underline transition hover:opacity-70"
           >
             View All

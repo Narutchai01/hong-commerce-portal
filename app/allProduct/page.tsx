@@ -51,9 +51,7 @@ export default function ProductsPage() {
       <Navbar />
 
       <section className="px-4 py-10">
-        <h1 className="mb-6 text-2xl font-bold text-primary">
-          All Products
-        </h1>
+        <h1 className="mb-6 text-2xl font-bold text-primary">All Products</h1>
         <div className="mb-6 flex flex-wrap justify-center gap-2">
           {categories.map((cat) => (
             <button

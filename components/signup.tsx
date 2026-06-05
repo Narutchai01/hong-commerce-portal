@@ -2,121 +2,130 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import {
-    Eye,
-    EyeOff,
-} from "lucide-react";
+import { Eye, EyeOff } from "lucide-react";
 
 export default function SignupForm() {
-    const [showPassword, setShowPassword] =
-        useState(false);
-    const router = useRouter();
-    return (
-        <div className="w-full max-w-[420px] bg-white border border-[#f1d4cc] rounded-[10px] p-8">
-            <h1 className="text-center text-[40px] font-bold text-[#d12b00]">
-                Signup
-            </h1>
+  const router = useRouter();
+  const [showPassword, setShowPassword] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
 
-            <p className="text-center text-gray-500 mt-2 mb-8">
-                Join the digital bazaar today.
-            </p>
+  const handleSignup = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+    // For mock app, we'll just redirect to login
+    router.push("/login");
+  };
 
-            <form className="space-y-5">
-                <div>
-                    <label className="block mb-2 text-sm font-semibold">
-                        Full Name
-                    </label>
+  return (
+    <div className="w-full max-w-[420px] rounded-[10px] border border-[#f1d4cc] bg-white p-8">
+      <h1 className="text-center text-[40px] font-bold text-[#d12b00]">
+        Signup
+      </h1>
 
-                    <input
-                        type="text"
-                        placeholder="John Doe"
-                        className="w-full h-[50px] border rounded-md px-4 outline-none focus:border-[#d12b00]"
-                    />
-                </div>
+      <p className="mt-2 mb-8 text-center text-gray-500">
+        Join the digital bazaar today.
+      </p>
 
-                <div>
-                    <label className="block mb-2 text-sm font-semibold">
-                        Phone Number or Email
-                    </label>
-
-                    <input
-                        type="text"
-                        placeholder="e.g. +1 234 567 890"
-                        className="w-full h-[50px] border rounded-md px-4 outline-none focus:border-[#d12b00]"
-                    />
-                </div>
-
-                <div>
-                    <label className="block mb-2 text-sm font-semibold">
-                        Password
-                    </label>
-
-                    <div className="relative">
-                        <input
-                            type={
-                                showPassword
-                                    ? "text"
-                                    : "password"
-                            }
-                            placeholder="At least 8 characters"
-                            className="w-full h-[50px] border rounded-md px-4 outline-none focus:border-[#d12b00]"
-                        />
-
-                        <button
-                            type="button"
-                            onClick={() =>
-                                setShowPassword(
-                                    !showPassword
-                                )
-                            }
-                            className="absolute right-4 top-4 text-gray-500"
-                        >
-                            {showPassword ? (
-                                <Eye className="h-5 w-5" />
-                            ) : (
-                                <EyeOff className="h-5 w-5" />
-                            )}
-                        </button>
-                    </div>
-                </div>
-
-                <div>
-                    <label className="block mb-2 text-sm font-semibold">
-                        Confirm Password
-                    </label>
-
-                    <input
-                        type="password"
-                        placeholder="Confirm password"
-                        className="w-full h-[50px] border rounded-md px-4 outline-none focus:border-[#d12b00]"
-                    />
-                </div>
-
-                <button className="w-full h-[50px] bg-[#d12b00] hover:bg-[#b92500] text-white rounded-md font-semibold transition">
-                    Sign Up Now →
-                </button>
-            </form>
-
-            <div className="flex items-center gap-3 my-7 text-gray-400 text-sm">
-                <div className="flex-1 h-[1px] bg-gray-300"></div>
-
-                OR CONTINUE WITH
-
-                <div className="flex-1 h-[1px] bg-gray-300"></div>
-            </div>
-
-            <p className="text-center mt-6 text-sm">
-                Already have an account?{" "}
-                <button
-                    type="button"
-                    onClick={() =>
-                        router.push("/signup")
-                    }
-                    className="font-semibold text-[#d12b00]"
-                >
-                    Sign Up
-                </button>
-            </p>
+      <form onSubmit={handleSignup} className="space-y-5">
+        <div>
+          <label className="mb-2 block text-sm font-semibold">Full Name</label>
+          <input
+            type="text"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            placeholder="John Doe"
+            required
+            className="h-[50px] w-full rounded-md border px-4 outline-none focus:border-[#d12b00]"
+          />
         </div>
-    );
+
+        <div>
+          <label className="mb-2 block text-sm font-semibold">
+            Phone Number or Email
+          </label>
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="e.g. +1 234 567 890"
+            required
+            className="h-[50px] w-full rounded-md border px-4 outline-none focus:border-[#d12b00]"
+          />
+        </div>
+
+        <div>
+          <label className="mb-2 block text-sm font-semibold">Password</label>
+          <div className="relative">
+            <input
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="At least 8 characters"
+              required
+              minLength={8}
+              className="h-[50px] w-full rounded-md border px-4 outline-none focus:border-[#d12b00]"
+            />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute top-1/2 right-4 -translate-y-1/2 text-gray-500"
+            >
+              {showPassword ? (
+                <EyeOff className="h-5 w-5" />
+              ) : (
+                <Eye className="h-5 w-5" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        <div>
+          <label className="mb-2 block text-sm font-semibold">
+            Confirm Password
+          </label>
+          <input
+            type="password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+            placeholder="Confirm password"
+            required
+            className="h-[50px] w-full rounded-md border px-4 outline-none focus:border-[#d12b00]"
+          />
+        </div>
+
+        {error && <p className="text-sm text-red-500">{error}</p>}
+
+        <button
+          type="submit"
+          className="h-[50px] w-full rounded-md bg-[#d12b00] font-semibold text-white transition hover:bg-[#b92500]"
+        >
+          Sign Up Now →
+        </button>
+      </form>
+
+      <div className="my-7 flex items-center gap-3 text-sm text-gray-400">
+        <div className="h-[1px] flex-1 bg-gray-300"></div>
+        OR CONTINUE WITH
+        <div className="h-[1px] flex-1 bg-gray-300"></div>
+      </div>
+
+      <p className="mt-6 text-center text-sm">
+        Already have an account?{" "}
+        <button
+          type="button"
+          onClick={() => router.push("/login")}
+          className="font-semibold text-[#d12b00]"
+        >
+          Login
+        </button>
+      </p>
+    </div>
+  );
 }

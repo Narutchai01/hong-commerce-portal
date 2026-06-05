@@ -36,20 +36,14 @@ export default function Categories() {
           return (
             <button
               key={item.id}
-              onClick={() =>
-                router.push(
-                  `/allProduct?category=${item.id}`
-                )
-              }
+              onClick={() => router.push(`/allProduct?category=${item.id}`)}
               className="group flex flex-col items-center gap-3 rounded-2xl bg-white p-4 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
             >
               <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-gray-100 transition group-hover:bg-primary/10">
                 <Icon className="h-6 w-6 text-primary" />
               </div>
 
-              <span className="text-sm font-medium">
-                {item.name}
-              </span>
+              <span className="text-sm font-medium">{item.name}</span>
             </button>
           );
         })}
